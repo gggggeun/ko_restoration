@@ -25,7 +25,7 @@ def ending_check(new_check, formerTokenTag, idx, word_idx, phrase_cnt, word_cnt)
         new_check = False
     return new_check, formerTokenTag
 
-def komoran_processing(komoran, complex_verb_set):
+def tok_processing(tok, complex_verb_set):
     tokenList = list()
     formerTokenTag = ""
     original_token = ""
@@ -38,13 +38,14 @@ def komoran_processing(komoran, complex_verb_set):
         tokenWord = ""
         formerTag = ""
         new_check = False
-        while idx < phrase_cnt:
-            token = phrase[idx].getFirst().replace(" ", "") #remove white space in proper nouns
+        while idx < phrase_cnt - 1:
+            # token = phrase[idx].getFirst().replace(" ", "") #remove white space in proper nouns
+            token = phrase[0].replace(" ", "")
             if " " not in token and len(token) > 9:
                 idx += 1
                 new_check, formerTokenTag = ending_check(new_check, formerTokenTag, idx, word_idx, phrase_cnt, word_cnt)
                 continue
-            tag = phrase[idx].getSecond()
+            tag = phrase[1] #phrase[idx].getSecond()
             ########## FIRST PHONEME
             if idx == 0 or (idx == 1 and formerTag == "XPN"):       #XPN: 체언접두사
                 if formerTokenTag == "REMOVE_EC":
